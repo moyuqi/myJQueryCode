@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>A jQuery RandomNum Demo</title>
+    <link rel="stylesheet" href="assets/css/base.css"/>
+    <link rel="stylesheet" href="assets/css/jquery.randomnum.css"/>
+    <style type="text/css">
+        #paramsDiv {
+            text-align: center;
+            margin: 10px;
+            font-size: 16px;;
+        }
+    </style>
+</head>
+<body>
+<div id="paramsDiv">
+    <div><h1>jQuery 生成随机数插件，基于jquery.countdown</h1></div>
+    随机数位数:<input type="text" name="randomCount" id="randomCount" value="6"/>
+    <input type="button" name="initInput" id="initInput" value="初始化"/>
+    <input type="button" name="getRandom" id="getRandom" value="生成随机数"/>
+</div>
+<div id="randomNumDiv"></div>
+<!--<script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>-->
+<script type="text/javascript" src="//cdnjscn.b0.upaiyun.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="assets/js/jquery.randomnum.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#initInput").click(function () {
+            var randomCount = $("#randomCount").val();
+            if (randomCount > 0) {
+                $("#randomNumDiv").randomNum({
+                    count: randomCount,
+                    startRandomObj: $("#getRandom")
+                });
+            } else {
+                alert("请输入有效的随机数位数");
+            }
+        });
+    });
+</script>
+</body>
+</html>
