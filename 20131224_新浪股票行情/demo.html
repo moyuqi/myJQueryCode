@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>新浪股票行情接口测试</title>
+</head>
+<body>
+<div class ='hqDiv'></div>
+<script type="text/javascript" src="//cdnjscn.b0.upaiyun.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //http://blog.sina.com.cn/s/blog_58fc3aad01015nu7.html
+        var consoleHq = function (reqDate) {
+            //$("<div class ='hqDiv' style='margin: 10px 10px'><div>请求时间：" + reqDate + "</div><div>" + hq_str_sh000001 + "</div></div><hr>").insertBefore($(".hqDiv").eq(0));
+            $("<div class ='hqDiv' style='margin: 10px 10px'><div>请求时间：" + reqDate + "</div><div>" + hq_str_s_sh000001 + "</div></div><hr>").insertBefore($(".hqDiv").eq(0));
+        };
+        var getHq = function () {
+            var reqDate = new Date();
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            //script.src = "http://hq.sinajs.cn/list=sh000001";
+            script.src = "http://hq.sinajs.cn/list=s_sh000001";
+            document.body.appendChild(script);
+
+            consoleHq(reqDate);
+        };
+
+        function pageInit() {
+            window.setInterval(getHq, 1000);
+        }
+
+        pageInit();
+    });
+</script>
+</body>
+</html>
