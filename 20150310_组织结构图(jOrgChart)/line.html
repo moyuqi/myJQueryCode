@@ -2,8 +2,8 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>20150310_组织结构图</title>
-    <link rel="stylesheet" href="css/jquery.jOrgChart.css"/>
+    <title>20150310_组织结构图_关系线</title>
+    <link rel="stylesheet" href="css/moyuqi.jquery.jOrgChart.css"/>
 </head>
 <body>
 <ul id="org" style="display:none">
@@ -11,7 +11,7 @@
         Food
         <ul>
             <li id="beer">Beer</li>
-            <li>Vegetables
+            <li lineType="type1">Vegetables
                 <a href="http://wesnolte.com" target="_blank">Click me</a>
                 <ul>
                     <li>Pumpkin</li>
@@ -39,7 +39,7 @@
                 </ul>
             </li>
             <li>Bread</li>
-            <li class="collapsed">Chocolate
+            <li class="collapsed" lineType="chocolateType">Chocolate
                 <ul>
                     <li>Topdeck</li>
                     <li>Reese's Cups</li>
@@ -51,7 +51,7 @@
 <div id="chart" class="orgChart"></div>
 
 <script type="text/javascript" src="//cdnjscn.b0.upaiyun.com/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="js/jquery.jOrgChart.js"></script>
+<script src="js/moyuqi.jquery.jOrgChart.js"></script>
 <script>
     jQuery(document).ready(function () {
         $("#org").jOrgChart({
