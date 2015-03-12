@@ -28,6 +28,17 @@
         }
         $appendTo.append($container);
 
+
+        //$.browser 在1.9移除，$.browser.msie 可改为 JQuery.support.boxModel
+        try{
+            if (($.browser && $.browser.msie)|| ($.support && $.support.boxModel)) {
+                fixLineWidth($appendTo,$container);
+            }
+        }catch (e){
+            
+        }
+
+
         // add drag and drop if enabled
         if (opts.dragAndDrop) {
             $('div.node').draggable({
@@ -236,6 +247,29 @@
         });
     };
 
-    
+    /**
+     *修正线宽度
+     * @param $container
+     */
+    function fixLineWidth($appendTo,$container) {
+        $('<div class="clear"></div>').appendTo($appendTo);
+
+        var $nodeCells = $("tr.node-cells", $container);
+        $nodeCells.each(function (nodeCellIndex) {
+            if ($(this).nextAll().length == 3) {
+                var $lineTr = $(this).nextAll().eq(1);
+                var $nodeTr = $(this).nextAll().eq(2);
+                if (($lineTr && $lineTr.length > 0) && ($nodeTr && $nodeTr.length > 0)) { //说明有子节点
+                    var $nodeContainer = $nodeTr.children();
+                    $nodeContainer.each(function (nodeIndex) {
+                        var width = $(this).width();
+                        var $lineLeft = $lineTr.children().eq(nodeIndex * 2).css("width", (width / 2) + 2);
+                        var $lineRight = $lineTr.children().eq(nodeIndex * 2 + 1).css("width", width / 2);
+                    });
+                }
+            }
+        });
+
+    }
 
 })(jQuery);
