@@ -1,0 +1,70 @@
+<div id="oDivL_tab_Test2"
+     style="overflow: hidden; height: 212px; position: absolute; z-index: 1000; left: 8px; top: 656.2999877929688px; ">
+    <table style="width: 99px; height: 483px; " border="1" width="900">
+        <tbody>
+        <tr class="tabTh">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap" width="100px">序号</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">1</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">2</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">3</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">4</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">5</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">6</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">7</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">8</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">9</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">10</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">11</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">12</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">13</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">14</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">15</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">16</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">17</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">18</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">19</td>
+        </tr>
+        <tr align="center">
+            <td style="height: 23px; width: 99px; " nowrap="nowrap"><input type="checkbox">20</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
