@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>EasyUI DataGrid Filter实现</title>
+    <link rel="stylesheet" type="text/css" href="../../_lib/jquery-easyui-1.3.5/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../_lib/jquery-easyui-1.3.5/themes/icon.css">
+    <script type="text/javascript" src="../../_lib/jquery-easyui-1.3.5/jquery.min.js"></script>
+    <script type="text/javascript" src="../../_lib/jquery-easyui-1.3.5/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="datagrid-filter.js"></script>
+    <style>
+        .icon-filter {
+            background: url('filter.png') no-repeat center center;
+        }
+    </style>
+    <script>
+        var data = [
+            {
+                "productid": "FI-SW-01",
+                "productname": "Koi",
+                "unitcost": 10.00,
+                "status": "P",
+                "listprice": 36.50,
+                "attr1": "Large",
+                "itemid": "EST-1"
+            },
+            {
+                "productid": "K9-DL-01",
+                "productname": "Dalmation",
+                "unitcost": 12.00,
+                "status": "P",
+                "listprice": 18.50,
+                "attr1": "Spotted Adult Female",
+                "itemid": "EST-10"
+            },
+            {
+                "productid": "RP-SN-01",
+                "productname": "Rattlesnake",
+                "unitcost": 12.00,
+                "status": "P",
+                "listprice": 38.50,
+                "attr1": "Venomless",
+                "itemid": "EST-11"
+            },
+            {
+                "productid": "RP-SN-01",
+                "productname": "Rattlesnake",
+                "unitcost": 12.00,
+                "status": "P",
+                "listprice": 26.50,
+                "attr1": "Rattleless",
+                "itemid": "EST-12"
+            },
+            {
+                "productid": "RP-LI-02",
+                "productname": "Iguana",
+                "unitcost": 12.00,
+                "status": "P",
+                "listprice": 35.50,
+                "attr1": "Green Adult",
+                "itemid": "EST-13"
+            },
+            {
+                "productid": "FL-DSH-01",
+                "productname": "Manx",
+                "unitcost": 12.00,
+                "status": "N",
+                "listprice": 158.50,
+                "attr1": "Tailless",
+                "itemid": "EST-14"
+            },
+            {
+                "productid": "FL-DSH-01",
+                "productname": "Manx",
+                "unitcost": 12.00,
+                "status": "P",
+                "listprice": 83.50,
+                "attr1": "With tail",
+                "itemid": "EST-15"
+            },
+            {
+                "productid": "FL-DLH-02",
+                "productname": "Persian",
+                "unitcost": 12.00,
+                "status": "P",
+                "listprice": 23.50,
+                "attr1": "Adult Female",
+                "itemid": "EST-16"
+            },
+            {
+                "productid": "FL-DLH-02",
+                "productname": "Persian",
+                "unitcost": 12.00,
+                "status": "N",
+                "listprice": 89.50,
+                "attr1": "Adult Male",
+                "itemid": "EST-17"
+            },
+            {
+                "productid": "AV-CB-01",
+                "productname": "Amazon Parrot",
+                "unitcost": 92.00,
+                "status": "N",
+                "listprice": 63.50,
+                "attr1": "Adult Male",
+                "itemid": "EST-18"
+            }
+        ];
+        $(function () {
+            var dg = $('#dg').datagrid({
+                filterBtnIconCls: 'icon-filter'
+            });
+            dg.datagrid('enableFilter', [{
+                field: 'listprice',
+                type: 'numberbox',
+                options: {precision: 1},
+                op: ['equal', 'notequal', 'less', 'greater']
+            }, {
+                field: 'unitcost',
+                type: 'numberbox',
+                options: {precision: 1},
+                op: ['equal', 'notequal', 'less', 'greater']
+            }, {
+                field: 'status',
+                type: 'combobox',
+                options: {
+                    panelHeight: 'auto',
+                    data: [{value: '', text: 'All'}, {value: 'P', text: 'P'}, {value: 'N', text: 'N'}],
+                    onChange: function (value) {
+                        if (value == '') {
+                            dg.datagrid('removeFilterRule', 'status');
+                        } else {
+                            dg.datagrid('addFilterRule', {
+                                field: 'status',
+                                op: 'equal',
+                                value: value
+                            });
+                        }
+                        dg.datagrid('doFilter');
+                    }
+                }
+            }]);
+        });
+    </script>
+</head>
+<body>
+<h1>DataGrid Filter Row</h1>
+
+<table id="dg" title="DataGrid" style="width:700px;height:250px" data-options="
+				singleSelect:true,
+				data:data
+			">
+    <thead>
+    <tr>
+        <th data-options="field:'itemid',width:80">Item ID</th>
+        <th data-options="field:'productid',width:100">Product</th>
+        <th data-options="field:'listprice',width:80,align:'right'">List Price</th>
+        <th data-options="field:'unitcost',width:80,align:'right'">Unit Cost</th>
+        <th data-options="field:'attr1',width:250">Attribute</th>
+        <th data-options="field:'status',width:60,align:'center'">Status</th>
+    </tr>
+    </thead>
+</table>
+
+<!--====================API =================================================-->
+<h2>用法</h2>
+<h4>包含 'datagrid-filter.js' 文件</h4>
+<pre class="prettyprint prettyprinted" style="color: rgb(0, 102, 0);"><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"datagrid-filter.js"</span><span class="tag">&gt;&lt;/script&gt;</span></pre>
+<h4>启用过滤（Filter）</h4>
+<pre class="prettyprint prettyprinted" style="color: rgb(0, 102, 0);"><span class="kwd">var</span><span class="pln"> dg </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">(</span><span class="str">'#dg'</span><span class="pun">);</span><span class="pln">
+dg</span><span class="pun">.</span><span class="pln">datagrid</span><span class="pun">();</span><span class="pln">	</span><span class="com">// create datagrid</span><span class="pln">
+dg</span><span class="pun">.</span><span class="pln">datagrid</span><span class="pun">(</span><span class="str">'enableFilter'</span><span class="pun">);</span><span class="pln">	</span><span class="com">// enable filter</span></pre>
+<h2>属性</h2>
+<p>该属性扩展自数据网格（datagrid），下面是为数据网格（datagrid）添加的属性。</p>
+<table class="reference notranslate"> <tbody><tr> <th><strong>名称</strong></th> <th><strong>类型</strong></th> <th><strong>描述</strong></th> <th><strong>默认值</strong></th> </tr> <tr> <td>filterMenuIconCls</td> <td>string</td> <td>过滤菜单项（指示要使用的项目）的图标 class。</td> <td>icon-ok</td> </tr> <tr> <td>filterBtnIconCls</td> <td>string</td> <td>过滤按钮的图标 class。</td> <td>icon-filter</td> </tr> <tr> <td>filterBtnPosition</td> <td>string</td> <td>过滤按钮的位置。可能的值是 'left' 和 'right'。</td> <td>right</td> </tr> <tr> <td>filterPosition</td> <td>string</td> <td>过滤栏相对于列的位置。可能的值是 'top' 和 'bottom'。</td> <td>bottom</td> </tr> <tr> <td>remoteFilter</td> <td>boolean</td> <td> 设置为 true 则执行远程过滤。<br> 当启用时，'filterRules' 参数将发送到远程服务器。<br> 'filterRules' 参数的值由 'filterStringify' 函数获得。 </td> <td>false</td> </tr> <tr> <td>filterDelay</td> <td>number</td> <td>从 'text' 过滤组件中最后一个键输入事件起，延迟执行过滤的时间。</td> <td>400</td> </tr> <tr> <td>filterRules</td> <td>array</td> <td>过滤规则的定义。每个规则包含 'field'、'op' 和 'value' 属性。</td> <td>[]</td> </tr> <tr> <td>filterStringify</td> <td>function</td> <td>把过滤规则字符串化的函数。</td> <td> <pre class="prettyprint prettyprinted" style="color: rgb(0, 102, 0);"><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">){</span><span class="pln">
+	</span><span class="kwd">return</span><span class="pln"> JSON</span><span class="pun">.</span><span class="pln">stringify</span><span class="pun">(</span><span class="pln">data</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">}</span></pre> </td> </tr> </tbody></table>
+<h2>方法</h2>
+<p> 下面的方法扩展自数据网格（datagrid）。 </p>
+<table class="reference notranslate">
+    <tbody>
+    <tr>
+        <th><strong>名称</strong></th>
+        <th><strong>参数</strong></th>
+        <th><strong>描述</strong></th>
+    </tr>
+    <tr>
+        <td>enableFilter</td>
+        <td>filters</td>
+        <td> 创建并启用过滤功能。<br> 'filters' 参数是一个过滤配置的数组。<br> 每一项包含下列属性：<br> 1) field：需要定义规则的域。<br> 2)
+            type：过滤类型，可能的值：label、text、textarea、checkbox、numberbox、validatebox、datebox、combobox、combotree。<br> 3)
+            options：过滤类型的选项。<br> 4)
+            op：过滤操作，可能的值：contains、equal、notequal、beginwith、endwith、less、lessorequal、greater、greaterorequal。 <p>代码实例：</p> <pre
+                    class="prettyprint prettyprinted" style="color: rgb(0, 102, 0);"><span class="pln">$</span><span
+                    class="pun">(</span><span class="str">'#dg'</span><span class="pun">).</span><span class="pln">datagrid</span><span
+                    class="pun">(</span><span class="str">'enableFilter'</span><span class="pun">);</span><span
+                    class="pln">
+$</span><span class="pun">(</span><span class="str">'#dg'</span><span class="pun">).</span><span
+                    class="pln">datagrid</span><span class="pun">(</span><span class="str">'enableFilter'</span><span
+                    class="pun">,</span><span class="pln"> </span><span class="pun">[{</span><span class="pln">
+	field</span><span class="pun">:</span><span class="str">'listprice'</span><span class="pun">,</span><span
+                    class="pln">
+	type</span><span class="pun">:</span><span class="str">'numberbox'</span><span class="pun">,</span><span
+                    class="pln">
+	options</span><span class="pun">:{</span><span class="pln">precision</span><span class="pun">:</span><span
+                    class="lit">1</span><span class="pun">},</span><span class="pln">
+	op</span><span class="pun">:[</span><span class="str">'equal'</span><span class="pun">,</span><span class="str">'notequal'</span><span
+                    class="pun">,</span><span class="str">'less'</span><span class="pun">,</span><span class="str">'greater'</span><span
+                    class="pun">]</span><span class="pln">
+</span><span class="pun">}]);</span></pre>
+        </td>
+    </tr>
+    <tr>
+        <td>addFilterRule</td>
+        <td>param</td>
+        <td> 添加一个过滤规则。 <pre class="prettyprint prettyprinted" style="color: rgb(0, 102, 0);"><span
+                class="pln">$</span><span class="pun">(</span><span class="str">'#dg'</span><span
+                class="pun">).</span><span class="pln">datagrid</span><span class="pun">(</span><span class="str">'addFilterRule'</span><span
+                class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+	field</span><span class="pun">:</span><span class="pln"> </span><span class="str">'desp'</span><span
+                class="pun">,</span><span class="pln">
+	op</span><span class="pun">:</span><span class="pln"> </span><span class="str">'contains'</span><span
+                class="pun">,</span><span class="pln">
+	value</span><span class="pun">:</span><span class="pln"> </span><span class="str">'easyui'</span><span class="pln">
+</span><span class="pun">});</span></pre>
+        </td>
+    </tr>
+    <tr>
+        <td>removeFilterRule</td>
+        <td>field</td>
+        <td> 移除过滤规则。<br> 如果 'field' 参数未指定，移除所有的过滤规则。</td>
+    </tr>
+    <tr>
+        <td>doFilter</td>
+        <td>none</td>
+        <td> 基于过滤规则执行过滤。</td>
+    </tr>
+    <tr>
+        <td>getFilterComponent</td>
+        <td>field</td>
+        <td>在指定的域上获取过滤组件。</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

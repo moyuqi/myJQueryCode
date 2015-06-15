@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>EasyUI DataGrid Filter+ Pagination实现</title>
+    <link rel="stylesheet" type="text/css" href="../../_lib/jquery-easyui-1.3.5/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../_lib/jquery-easyui-1.3.5/themes/icon.css">
+    <script type="text/javascript" src="../../_lib/jquery-easyui-1.3.5/jquery.min.js"></script>
+    <script type="text/javascript" src="../../_lib/jquery-easyui-1.3.5/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="datagrid-filter.js"></script>
+    <style>
+        .icon-filter {
+            background: url('filter.png') no-repeat center center;
+        }
+    </style>
+    <script>
+        var data = [];
+        var initFilter = true; //用来防止enableFilter 默认触发时，显示所有数据
+        var config = {
+            pageSize: 10
+        };
+
+        for (var i = 0; i < 10; i++) {
+            data.push(
+                    {
+                        "productid": "FI-SW-01-" + i,
+                        "productname": "Koi",
+                        "unitcost": 10.00,
+                        "status": "P",
+                        "listprice": 36.50,
+                        "attr1": "Large",
+                        "itemid": "EST-1"
+                    },
+                    {
+                        "productid": "K9-DL-01-" + i,
+                        "productname": "Dalmation",
+                        "unitcost": 12.00,
+                        "status": "P",
+                        "listprice": 18.50,
+                        "attr1": "Spotted Adult Female",
+                        "itemid": "EST-10"
+                    },
+                    {
+                        "productid": "RP-SN-01-" + i,
+                        "productname": "Rattlesnake",
+                        "unitcost": 12.00,
+                        "status": "P",
+                        "listprice": 38.50,
+                        "attr1": "Venomless",
+                        "itemid": "EST-11"
+                    },
+                    {
+                        "productid": "RP-SN-01-" + i,
+                        "productname": "Rattlesnake",
+                        "unitcost": 12.00,
+                        "status": "P",
+                        "listprice": 26.50,
+                        "attr1": "Rattleless",
+                        "itemid": "EST-12"
+                    },
+                    {
+                        "productid": "RP-LI-02-" + i,
+                        "productname": "Iguana",
+                        "unitcost": 12.00,
+                        "status": "P",
+                        "listprice": 35.50,
+                        "attr1": "Green Adult",
+                        "itemid": "EST-13"
+                    },
+                    {
+                        "productid": "FL-DSH-01-" + i,
+                        "productname": "Manx" + i,
+                        "unitcost": 12.00,
+                        "status": "N",
+                        "listprice": 158.50,
+                        "attr1": "Tailless",
+                        "itemid": "EST-14"
+                    },
+                    {
+                        "productid": "FL-DSH-01-" + i,
+                        "productname": "Manx",
+                        "unitcost": 12.00,
+                        "status": "P",
+                        "listprice": 83.50,
+                        "attr1": "With tail",
+                        "itemid": "EST-15"
+                    },
+                    {
+                        "productid": "FL-DLH-02-" + i,
+                        "productname": "Persian",
+                        "unitcost": 12.00,
+                        "status": "P",
+                        "listprice": 23.50,
+                        "attr1": "Adult Female",
+                        "itemid": "EST-16"
+                    },
+                    {
+                        "productid": "FL-DLH-02-" + i,
+                        "productname": "Persian",
+                        "unitcost": 12.00,
+                        "status": "N",
+                        "listprice": 89.50,
+                        "attr1": "Adult Male",
+                        "itemid": "EST-17"
+                    },
+                    {
+                        "productid": "AV-CB-01-" + i,
+                        "productname": "Amazon Parrot",
+                        "unitcost": 92.00,
+                        "status": "N",
+                        "listprice": 63.50,
+                        "attr1": "Adult Male",
+                        "itemid": "EST-18"
+                    }
+            );
+        }
+
+        //console.log(data);
+
+        $(function () {
+            var dg = $('#dg').datagrid({
+                pagination: true,
+                data: data.slice(0, config.pageSize),
+                loadFilter: function (_data) { // tip 带分页的过滤需要先加载全部数据，不然只对当前页过滤
+                    console.log("loadFilter");
+                    console.log(initFilter);
+                    console.log(_data);
+                    if (initFilter) {
+                        initFilter = false;
+                    } else {
+                        _data = data;
+                    }
+                    console.log(_data);
+
+                    return {total: _data.length, rows: _data};
+
+                },
+                filterBtnIconCls: 'icon-filter'
+            });
+
+            var pgFun = function () {
+                var pageNo = 1;
+                var pageSize = config.pageSize;
+                if (arguments.length = 2) {//onSelectPage 和 onRefresh 2个入参
+                    pageNo = arguments[0];
+                    pageSize = arguments[1];
+                } else if (arguments.length == 1) {//onChangePageSize 一个入参
+                    pageSize = arguments[0];
+                }
+
+                console.log("pageNo:"+pageNo+"\t"+"pageSize:"+pageSize);
+
+                var start = (pageNo - 1) * pageSize;
+                var end = start + pageSize;
+                dg.datagrid("loadData", data.slice(start, end));
+                dg.datagrid("getPager").pagination("refresh", {
+                    total: data.length,
+                    pageNumber: pageNo,
+                    pageSize: pageSize
+                }).pagination({
+                    total: data.length,
+                    onSelectPage: pgFun,
+                    onRefresh: function (_pageNo, _pageSize) {
+                        console.log("onRefresh inner pageNo:"+_pageNo+"\t"+"pageSize:"+_pageSize);
+                        initFilter = true;
+                        pgFun(0, config.pageSize);
+                    },
+                    onChangePageSize: pgFun
+                });
+            };
+
+            dg.datagrid("getPager").pagination({
+                total: data.length,
+                onSelectPage: pgFun,
+                onRefresh: function (_pageNo, _pageSize) {
+                    console.log("onRefresh outer pageNo:"+_pageNo+"\t"+"pageSize:"+_pageSize);
+
+                    initFilter = true;
+                    pgFun(0, config.pageSize);
+                },
+                onChangePageSize: pgFun
+            });
+
+            dg.datagrid('enableFilter', [{
+                field: 'listprice',
+                type: 'numberbox',
+                options: {precision: 1},
+                op: ['equal', 'notequal', 'less', 'greater']
+            }, {
+                field: 'unitcost',
+                type: 'numberbox',
+                options: {precision: 1},
+                op: ['equal', 'notequal', 'less', 'greater']
+            }, {
+                field: 'attr1',
+                type: 'text',
+                options: {
+                    onChange: function (value) {
+                        if (value == '') {
+                            dg.datagrid('removeFilterRule', 'attr1');
+                        } else {
+                            dg.datagrid('addFilterRule', {
+                                field: 'attr1',
+                                op: 'equal',
+                                value: value
+                            });
+                        }
+                        dg.datagrid('doFilter');
+                    }
+                }
+            }, {
+                field: 'status',
+                type: 'combobox',
+                options: {
+                    panelHeight: 'auto',
+                    data: [{value: '', text: 'All'}, {value: 'P', text: 'P'}, {value: 'N', text: 'N'}],
+                    onChange: function (value) {
+                        if (value == '') {
+                            dg.datagrid('removeFilterRule', 'status');
+                        } else {
+                            dg.datagrid('addFilterRule', {
+                                field: 'status',
+                                op: 'equal',
+                                value: value
+                            });
+                        }
+                        dg.datagrid("loadData", data);// tip 带分页的过滤需要先加载全部数据，不然只对当前页过滤
+                        dg.datagrid('doFilter');
+                    }
+                }
+            }]);
+        });
+    </script>
+</head>
+<body>
+<h1>DataGrid Filter Row</h1>
+
+<table id="dg" title="DataGrid" style="width:700px;height:250px" data-options="
+				singleSelect:true,
+				data:data
+			">
+    <thead>
+    <tr>
+        <th data-options="field:'itemid',width:80">Item ID</th>
+        <th data-options="field:'productid',width:100">Product</th>
+        <th data-options="field:'listprice',width:80,align:'right'">List Price</th>
+        <th data-options="field:'unitcost',width:80,align:'right'">Unit Cost</th>
+        <th data-options="field:'attr1',width:250">Attribute</th>
+        <th data-options="field:'status',width:60,align:'center'">Status</th>
+    </tr>
+    </thead>
+</table>
+</body>
+</html>
